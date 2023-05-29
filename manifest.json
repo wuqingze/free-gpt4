@@ -1,0 +1,15 @@
+{
+	"manifest_version": 3,
+	"name": "free gpt4",
+	"version": "1.0",
+	"description": "本插件提供拷贝poe网站gpt对话的快捷方式",
+	"author": "wuqingze",
+	"content_scripts": 
+	[
+		{
+			"matches": ["https://poe.com/*"],
+			"js": ["content-script.js"],
+            "run_at": "document_end"
+		}
+	]
+}
