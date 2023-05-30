@@ -14,7 +14,7 @@ function extractText(element) {
         return '';
     }
     if (element.nodeType === Node.TEXT_NODE) {
-        return element.textContent.trim();
+        return element.textContent.trimRight();
     }
 
     if (element.nodeType === Node.ELEMENT_NODE) {
@@ -87,15 +87,15 @@ function copy() {
 
     var usercontent = extractText(userdiv);
     var gptcontent = extractText(gptdiv);
-    if(! usercontent.startsWith("**Alice**")){
-        usercontent = "**Alice**\n"+usercontent;
+    if(! usercontent.startsWith("我是Alice你是Bob,你只能以Bob的身份回答")){
+        usercontent = "我是Alice你是Bob,你只能以Bob的身份回答\n\n**Alice**\n"+usercontent;
     }
 
     if(! gptcontent.startsWith("**Bob**")){
         gptcontent = "**Bob**\n"+gptcontent;
     }
 
-    textarea.value = "我是Alice你是Bob,你只能以Bob的身份回答\n\n"+usercontent+gptcontent+"**Alice**\n";
+    textarea.value = usercontent+gptcontent+"**Alice**\n";
 
     // 选择textarea中的文本
     textarea.select();

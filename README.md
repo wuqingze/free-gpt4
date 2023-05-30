@@ -11,7 +11,7 @@ Hi, how is your doing?
 ChatGPT:
 fine, and you?
 ```
-如果这时候User说`good. the weather is nice today`,如果认为我们仅仅像ChatGPT发送`good. the weather is nice today`的想法是错误的。它会将历史上的对话，即上下文，发送给ChatGPT。
+如果这时候User说`good. the weather is nice today`,如果认为我们仅仅向ChatGPT发送一句`good. the weather is nice today`的想法是错误的。它会将历史上的所有对话，即下面的全部内容，发送给ChatGPT。
 ```
 User:
 Hi, how is your doing?
