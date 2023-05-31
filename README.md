@@ -35,3 +35,5 @@ good. the weather is nice today
 - 安装插件，下载本项目，`chrome浏览器`->`设置`->`扩展程序`->`开发者模式`->`加载已解压的扩展程序`->`选择本项目`
 - 进入poe.com，使用poe.com的gpt4服务
 - 点击poe.com的左上角icon，网页提示复制成功。到下一个poe.com账号粘贴，继续使用gpt4对话
+
+*修改chrome插件的内容，重新关闭打开浏览器更新会自动加载*
