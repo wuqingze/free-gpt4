@@ -115,7 +115,7 @@ function cleanpage(){
             if (mutation.type === 'childList') {
                 Array.from(mutation.addedNodes).forEach((node) => {
                     if (node.nodeType === Node.ELEMENT_NODE) {
-                        if (node.classList.contains('ReactModalPortal')) {
+                        if (node.classList.contains('ReactModalPortal') || node.classList.contains('ChatPageDisclaimer_warningBanner__fcCz9')) {
                             // 删除具有ReactModalPortal类的div元素
                             node.remove();
                         } else {
@@ -124,6 +124,9 @@ function cleanpage(){
                             if (reactModalPortal) {
                                 // 删除具有ReactModalPortal类的div元素
                                 reactModalPortal.remove();
+                            }else{
+                                var wnb = node.querySelector('ChatPageDisclaimer_warningBanner__fcCz9');
+                                if(wnb) wnb.remove();
                             }
                         }
                     }
