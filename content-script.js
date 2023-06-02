@@ -42,6 +42,9 @@ function extractText(element) {
                 return `${children}\n`;
             case 'li':
                 let index = indexofparent(element, element.parentElement);
+                // 获取 <ol> 元素的 start 属性的值
+                const startValue = element.parentElement.getAttribute('start');
+                index = startValue?index+parseInt(startValue):index;
                 const parentTagName = element.parentElement.tagName.toLowerCase();
                 return parentTagName === 'ol' ? `${index}. ${children.trim()}\n` : `* ${children.trim()}\n`;
             case 'p':
@@ -77,16 +80,24 @@ function extractText(element) {
 }
 
 function copy() {
-
-    var userdiv = document.querySelector("#__next > div.PageWithSidebarLayout_centeringDiv___L9br > div > section > div.PageWithSidebarLayout_scrollSection__IRP9Y.PageWithSidebarLayout_startAtBottom__wKtfz > div > div > div.InfiniteScroll_container__kzp7X.ChatMessagesView_infiniteScroll__K_SeP > div:nth-last-child(1) > div:nth-child(1)> div.ChatMessage_messageWrapper__Zf87D > div.Message_row___ur0Y > div.Message_humanMessageBubble__Nld4j > div");
-    var gptdiv = document.querySelector("#__next > div.PageWithSidebarLayout_centeringDiv___L9br > div > section > div.PageWithSidebarLayout_scrollSection__IRP9Y.PageWithSidebarLayout_startAtBottom__wKtfz > div > div > div.InfiniteScroll_container__kzp7X.ChatMessagesView_infiniteScroll__K_SeP > div:nth-last-child(1) > div:nth-child(2) > div.ChatMessage_messageWrapper__Zf87D > div.Message_row___ur0Y > div.Message_botMessageBubble__CPGMI > div");
+    var messagePairView = document.querySelector("#__next > div.PageWithSidebarLayout_centeringDiv___L9br > div > section > div.PageWithSidebarLayout_scrollSection__IRP9Y.PageWithSidebarLayout_startAtBottom__wKtfz > div > div > div.InfiniteScroll_container__kzp7X.ChatMessagesView_infiniteScroll__K_SeP > div:nth-last-child(1)");
+    var AliceDiv;
+    var BobDiv;
+    if(messagePairView.children[0].classList.contains("ChatMessage_messageWrapper__Zf87D") &&
+        messagePairView.children[1].classList.contains("ChatMessage_messageWrapper__Zf87D")){
+        AliceDiv = document.querySelector("#__next > div.PageWithSidebarLayout_centeringDiv___L9br > div > section > div.PageWithSidebarLayout_scrollSection__IRP9Y.PageWithSidebarLayout_startAtBottom__wKtfz > div > div > div.InfiniteScroll_container__kzp7X.ChatMessagesView_infiniteScroll__K_SeP > div:nth-last-child(1) > div:nth-child(1)> div.ChatMessage_messageWrapper__Zf87D > div.Message_row___ur0Y > div.Message_humanMessageBubble__Nld4j > div");
+        BobDiv = document.querySelector("#__next > div.PageWithSidebarLayout_centeringDiv___L9br > div > section > div.PageWithSidebarLayout_scrollSection__IRP9Y.PageWithSidebarLayout_startAtBottom__wKtfz > div > div > div.InfiniteScroll_container__kzp7X.ChatMessagesView_infiniteScroll__K_SeP > div:nth-last-child(1) > div:nth-child(2) > div.ChatMessage_messageWrapper__Zf87D > div.Message_row___ur0Y > div.Message_botMessageBubble__CPGMI > div");
+    }else{
+        AliceDiv = document.querySelector("#__next > div.PageWithSidebarLayout_centeringDiv___L9br > div > section > div.PageWithSidebarLayout_scrollSection__IRP9Y.PageWithSidebarLayout_startAtBottom__wKtfz > div > div > div.InfiniteScroll_container__kzp7X.ChatMessagesView_infiniteScroll__K_SeP > div:nth-last-child(2) > div:nth-child(1)> div.ChatMessage_messageWrapper__Zf87D > div.Message_row___ur0Y > div.Message_humanMessageBubble__Nld4j > div");
+        BobDiv = document.querySelector("#__next > div.PageWithSidebarLayout_centeringDiv___L9br > div > section > div.PageWithSidebarLayout_scrollSection__IRP9Y.PageWithSidebarLayout_startAtBottom__wKtfz > div > div > div.InfiniteScroll_container__kzp7X.ChatMessagesView_infiniteScroll__K_SeP > div:nth-last-child(2) > div:nth-child(2) > div.ChatMessage_messageWrapper__Zf87D > div.Message_row___ur0Y > div.Message_botMessageBubble__CPGMI > div");
+    }
 
     var textarea = document.createElement("textarea");
     textarea.style.opacity = 0;
     document.body.appendChild(textarea);
 
-    var usercontent = extractText(userdiv);
-    var gptcontent = extractText(gptdiv);
+    var usercontent = extractText(AliceDiv);
+    var gptcontent = extractText(BobDiv);
     if(! usercontent.startsWith("我是Alice你是Bob,你只能以Bob的身份回答")){
         usercontent = "我是Alice你是Bob,你只能以Bob的身份回答\n\n**Alice**\n"+usercontent;
     }
