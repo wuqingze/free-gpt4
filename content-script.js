@@ -80,16 +80,22 @@ function extractText(element) {
 }
 
 function copy() {
-    var messagePairView = document.querySelector("#__next > div.PageWithSidebarLayout_centeringDiv___L9br > div > section > div.PageWithSidebarLayout_scrollSection__IRP9Y.PageWithSidebarLayout_startAtBottom__wKtfz > div > div > div.InfiniteScroll_container__kzp7X.ChatMessagesView_infiniteScroll__K_SeP > div:nth-last-child(1)");
+
+    var messageListView = document.querySelector("#__next > div > div > section > div > div > div > div");
     var AliceDiv;
     var BobDiv;
-    if(messagePairView.children[0].classList.contains("ChatMessage_messageWrapper__Zf87D") &&
-        messagePairView.children[1].classList.contains("ChatMessage_messageWrapper__Zf87D")){
-        AliceDiv = document.querySelector("#__next > div.PageWithSidebarLayout_centeringDiv___L9br > div > section > div.PageWithSidebarLayout_scrollSection__IRP9Y.PageWithSidebarLayout_startAtBottom__wKtfz > div > div > div.InfiniteScroll_container__kzp7X.ChatMessagesView_infiniteScroll__K_SeP > div:nth-last-child(1) > div:nth-child(1)> div.ChatMessage_messageWrapper__Zf87D > div.Message_row___ur0Y > div.Message_humanMessageBubble__Nld4j > div");
-        BobDiv = document.querySelector("#__next > div.PageWithSidebarLayout_centeringDiv___L9br > div > section > div.PageWithSidebarLayout_scrollSection__IRP9Y.PageWithSidebarLayout_startAtBottom__wKtfz > div > div > div.InfiniteScroll_container__kzp7X.ChatMessagesView_infiniteScroll__K_SeP > div:nth-last-child(1) > div:nth-child(2) > div.ChatMessage_messageWrapper__Zf87D > div.Message_row___ur0Y > div.Message_botMessageBubble__CPGMI > div");
+    const prefix = 'ChatMessage_messageRow'; // 定义要检查的前缀
+    let hasPrefix = Array.from(messageListView.lastChild.children[0].classList)
+        .some(className => className.startsWith(prefix)); // 检查元素的class列表中是否有以指定前缀开头的class
+    hasPrefix = hasPrefix && Array.from(messageListView.lastChild.children[1].classList)
+        .some(className => className.startsWith(prefix)); // 检查元素的class列表中是否有以指定前缀开头的class
+
+    if (hasPrefix) {
+        AliceDiv = messageListView.lastChild.children[0];
+        BobDiv = messageListView.lastChild.children[1];
     }else{
-        AliceDiv = document.querySelector("#__next > div.PageWithSidebarLayout_centeringDiv___L9br > div > section > div.PageWithSidebarLayout_scrollSection__IRP9Y.PageWithSidebarLayout_startAtBottom__wKtfz > div > div > div.InfiniteScroll_container__kzp7X.ChatMessagesView_infiniteScroll__K_SeP > div:nth-last-child(2) > div:nth-child(1)> div.ChatMessage_messageWrapper__Zf87D > div.Message_row___ur0Y > div.Message_humanMessageBubble__Nld4j > div");
-        BobDiv = document.querySelector("#__next > div.PageWithSidebarLayout_centeringDiv___L9br > div > section > div.PageWithSidebarLayout_scrollSection__IRP9Y.PageWithSidebarLayout_startAtBottom__wKtfz > div > div > div.InfiniteScroll_container__kzp7X.ChatMessagesView_infiniteScroll__K_SeP > div:nth-last-child(2) > div:nth-child(2) > div.ChatMessage_messageWrapper__Zf87D > div.Message_row___ur0Y > div.Message_botMessageBubble__CPGMI > div");
+        AliceDiv = messageListView.lastChild.previousSibling.children[0];
+        BobDiv = messageListView.lastChild.previousSibling.children[1];
     }
 
     var textarea = document.createElement("textarea");
