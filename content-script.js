@@ -163,7 +163,7 @@ function cleanpage(){
 }
 
 function run() {
-    var e = document.querySelector("#__next > div.PageWithSidebarLayout_centeringDiv___L9br > div > aside > div > header > a");
+    var e = document.querySelector("#__next > div > div > aside > div > header > a");
     e.addEventListener("click", function(event) {
         event.preventDefault(); // 阻止默认行为，即打开链接
         // 这里添加您想要执行的代码
