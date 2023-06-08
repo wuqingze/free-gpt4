@@ -14,7 +14,7 @@ function extractText(element) {
         return '';
     }
     if (element.nodeType === Node.TEXT_NODE) {
-        return element.textContent.trimRight();
+        return element.textContent.replace(/\n+$/, "");
     }
 
     if (element.nodeType === Node.ELEMENT_NODE) {
@@ -46,7 +46,7 @@ function extractText(element) {
                 const startValue = element.parentElement.getAttribute('start');
                 index = startValue?index+parseInt(startValue):index;
                 const parentTagName = element.parentElement.tagName.toLowerCase();
-                return parentTagName === 'ol' ? `${index}. ${children.trim()}\n` : `* ${children.trim()}\n`;
+                return parentTagName === 'ol' ? `${index}. ${children}\n` : `* ${children}\n`;
             case 'p':
                 return `${children}\n\n`;
             case 'strong':
