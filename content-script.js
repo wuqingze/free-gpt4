@@ -171,6 +171,12 @@ function run() {
             // 这里添加您想要执行的代码
             copy();
         });
+        const humanMessageBubbles = document.querySelectorAll('.Message_humanMessageBubble__Nld4j');
+
+        humanMessageBubbles.forEach(bubble => {
+            bubble.style.background = '#f1f2f2';
+            bubble.style.color = '#000';
+        });
     }, 1000);
 };
 
