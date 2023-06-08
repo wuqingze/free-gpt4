@@ -163,13 +163,15 @@ function cleanpage(){
 }
 
 function run() {
-    var e = document.querySelector("#__next > div > div > aside > div > header > a");
-    if(e) e.addEventListener("click", function(event) {
-        event.preventDefault(); // 阻止默认行为，即打开链接
-        // 这里添加您想要执行的代码
-        copy();
-    });
     cleanpage();
+    setTimeout(function(){
+        var e = document.querySelector("#__next > div > div > aside > div > header > a");
+        if(e) e.addEventListener("click", function(event) {
+            event.preventDefault(); // 阻止默认行为，即打开链接
+            // 这里添加您想要执行的代码
+            copy();
+        });
+    }, 1000);
 };
 
 window.onload = run;
