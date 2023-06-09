@@ -125,6 +125,36 @@ function copy() {
     alert("复制成功");
 }
 
+function classfilter(node){
+    if (node.nodeType === Node.ELEMENT_NODE && node.classList.contains('Message_humanMessageBubble__Nld4j')) {
+        // 将其 class 属性更改为 Message_botMessageBubble__CPGMI
+        node.classList.remove('Message_humanMessageBubble__Nld4j');
+        node.classList.add('Message_botMessageBubble__CPGMI');
+    }
+    if (node.childNodes.length > 0) {
+        for (var i = 0; i < node.childNodes.length; i++) {
+            classfilter(node.childNodes[i]);
+        }
+    }
+
+}
+
+function codefilter(node){
+    if (node.nodeName === 'CODE') {
+        // 获取所有行
+        let lines = node.textContent.split('\n');
+        // 过滤包含 "```" 的行
+        lines = lines.filter(line => !(line.trim() === '```'));
+        // 将过滤后的行重新组合成一个字符串
+        node.textContent = lines.join('\n');
+    }
+    if (node.childNodes.length > 0) {
+        for (var i = 0; i < node.childNodes.length; i++) {
+            codefilter(node.childNodes[i]);
+        }
+    }
+}
+
 function cleanpage(){
     // 创建一个用于观察DOM变化的MutationObserver实例
     const observer = new MutationObserver((mutations) => {
@@ -147,6 +177,8 @@ function cleanpage(){
                             }
                         }
                     }
+                    classfilter(node);
+                    codefilter(node);
                 });
             }
         });
@@ -163,19 +195,17 @@ function cleanpage(){
 }
 
 function run() {
-    cleanpage();
+    setTimeout(function(){
+        classfilter(document);
+        codefilter(document);
+    }, 500);
+    setTimeout(function(){ cleanpage();}, 2000);
     setTimeout(function(){
         var e = document.querySelector("#__next > div > div > aside > div > header > a");
         if(e) e.addEventListener("click", function(event) {
             event.preventDefault(); // 阻止默认行为，即打开链接
             // 这里添加您想要执行的代码
             copy();
-        });
-        const humanMessageBubbles = document.querySelectorAll('.Message_humanMessageBubble__Nld4j');
-
-        humanMessageBubbles.forEach(bubble => {
-            bubble.style.background = '#f1f2f2';
-            bubble.style.color = '#000';
         });
     }, 1000);
 };
