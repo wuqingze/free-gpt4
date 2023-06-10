@@ -195,11 +195,11 @@ function cleanpage(){
 }
 
 function run() {
+    cleanpage();
     setTimeout(function(){
         classfilter(document);
         codefilter(document);
     }, 500);
-    setTimeout(function(){ cleanpage();}, 2000);
     setTimeout(function(){
         var e = document.querySelector("#__next > div > div > aside > div > header > a");
         if(e) e.addEventListener("click", function(event) {
