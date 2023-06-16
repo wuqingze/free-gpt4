@@ -194,11 +194,30 @@ function cleanpage(){
     // observer.disconnect();
 }
 
+function pasteFromClickBoard(inputarea){
+navigator.clipboard.readText()
+  .then(text => {
+      inputarea.textContent = text;
+      inputarea.focus();
+      inputarea.setSelectionRange(inputarea.value.length, inputarea.value.length);
+      inputarea.scrollTop = inputarea.scrollHeight;
+      inputarea.focus();
+  })
+  .catch(err => {
+  });
+}
+
 function run() {
     cleanpage();
     setTimeout(function(){
         classfilter(document);
         codefilter(document);
+
+        // poe.com打开网页默认鼠标不是聚焦在输入框，需要用鼠标点击输入框
+        // 进行聚焦再输入，这里自动聚焦输入框，避免鼠标操作
+        var input = document.querySelector("textarea");
+        input.setAttribute("rows", 3);
+        pasteFromClickBoard(input);
     }, 500);
     setTimeout(function(){
         var e = document.querySelector("#__next > div > div > aside > div > header > a");
